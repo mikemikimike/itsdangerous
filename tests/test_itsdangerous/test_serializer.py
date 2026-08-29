@@ -54,8 +54,10 @@ class TestSerializer:
     def test_unexpected_load_keyword_is_rejected(self, serializer: Serializer):
         signed = serializer.dumps("value")
 
-        with pytest.raises(TypeError, match="unexpected keyword argument 'max_age'"):
-            serializer.loads(signed, max_age=10)
+        with pytest.raises(
+            TypeError, match="unexpected keyword argument 'unsupported'"
+        ):
+            serializer.loads(signed, unsupported=True)
 
     @pytest.mark.parametrize(
         "transform",

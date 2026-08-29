@@ -17,6 +17,12 @@ class TestURLSafeSerializer(TestSerializer):
     def value(self, request):
         return request.param
 
+    def test_max_age_is_rejected(self, serializer):
+        signed = serializer.dumps("value")
+
+        with pytest.raises(TypeError, match="unexpected keyword argument 'max_age'"):
+            serializer.loads(signed, max_age=10)
+
 
 class TestURLSafeTimedSerializer(TestURLSafeSerializer, TestTimedSerializer):
     @pytest.fixture()
